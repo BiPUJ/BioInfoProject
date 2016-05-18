@@ -32,7 +32,7 @@ def get_info(pdb_id, url_root='http://www.rcsb.org/pdb/rest/describeMol?structur
     return out
 
 
-get_info("2B4W")
+# get_info("2B4W")
 
 
 def get_pdb_file(pdb_id, filetype='pdb', compression=False):
@@ -101,4 +101,24 @@ def remove_at_sign(temp):
 
     return temp
 
+
 # describe_pdb('4lza')
+
+def get_raw_blast(pdb_id, output_form='HTML', chain_id='A'):
+    '''
+    Download full blast structure
+    Input: pdb_id , chain_id, output format
+    Output: entire blast
+    '''
+    url_root = 'http://www.rcsb.org/pdb/rest/getBlastPDB2?structureId='
+    url = url_root + pdb_id + '&chainId=' + chain_id + '&outputFormat=' + output_form
+    req = urllib.request.Request(url)
+    f = urllib.request.urlopen(req)
+    result = f.read()
+    result = result.decode('unicode_escape')
+    assert result
+
+    return result
+
+
+print(get_raw_blast('2a1o', output_form='HTML', chain_id='A'))
