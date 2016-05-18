@@ -1,5 +1,13 @@
 import urllib.request
 import xmltodict
+from json import loads, dumps
+from collections import OrderedDict, Counter
+from itertools import repeat, chain
+import urllib.request
+import time
+import re
+from json import loads, dumps
+import warnings
 
 
 def get_info(pdb_id, url_root='http://www.rcsb.org/pdb/rest/describeMol?structureId='):
@@ -19,10 +27,12 @@ def get_info(pdb_id, url_root='http://www.rcsb.org/pdb/rest/describeMol?structur
     result = temp.read()
     assert result
     out = xmltodict.parse(result, process_namespaces=True)
+    for k, v in out.items():
+        print(k, '-', v)
     return out
 
 
-'''print(get_info("2B4W"))'''
+get_info("2B4W")
 
 
 def get_pdb_file(pdb_id, filetype='pdb', compression=False):
@@ -54,5 +64,41 @@ def get_pdb_file(pdb_id, filetype='pdb', compression=False):
         print('invalid input')
 
 
-pdb_file = get_pdb_file('4zps', filetype='pdb', compression=False)
-print(pdb_file[:1000])
+# pdb_file = get_pdb_file('4zps', filetype='pdb', compression=False)
+# print(pdb_file[:1000])
+
+def describe_pdb(pdb_id):
+    '''
+    Description and metadata of a PDB  entry
+    Input:
+    pdb_id: string - 4 character
+    Out: description from PDB
+    '''
+    out = get_info(pdb_id, url_root='http://www.rcsb.org/pdb/rest/describePDB?structureId=')
+    out = to_dict(out)
+    out = remove_at_sign(out['PDBdescription']['PDB'])
+    for k, v in out.items():
+        print(k, '-', v)
+    return out
+
+
+def to_dict(odict):
+    '''
+    Converter to dictionary
+    convert to key: val pairs
+    '''
+    out = loads(dumps(odict))
+    return out
+
+
+def remove_at_sign(temp):
+    '''
+    Remove the "@" character from the beginning of key names in a dict()
+    '''
+    tagged_keys = [thing for thing in temp.keys() if thing.startswith('@')]
+    for tag_key in tagged_keys:
+        temp[tag_key[1:]] = temp.pop(tag_key)
+
+    return temp
+
+# describe_pdb('4lza')
