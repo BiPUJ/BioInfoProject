@@ -6,6 +6,7 @@ from itertools import repeat, chain
 import urllib.request
 import time
 import re
+import json
 from json import loads, dumps
 import warnings
 
@@ -27,12 +28,8 @@ def get_info(pdb_id, url_root='http://www.rcsb.org/pdb/rest/describeMol?structur
     result = temp.read()
     assert result
     out = xmltodict.parse(result, process_namespaces=True)
-    for k, v in out.items():
-        print(k, '-', v)
+    print(json.dumps(out, indent=4))
     return out
-
-
-# get_info("2B4W")
 
 
 def get_pdb_file(pdb_id, filetype='pdb', compression=False):
@@ -59,13 +56,11 @@ def get_pdb_file(pdb_id, filetype='pdb', compression=False):
         f = urllib.request.urlopen(req)
         result = f.read()
         result = result.decode('unicode_escape')
+        print(result[:1000])
         return result
     else:
         print('invalid input')
 
-
-# pdb_file = get_pdb_file('4zps', filetype='pdb', compression=False)
-# print(pdb_file[:1000])
 
 def describe_pdb(pdb_id):
     '''
@@ -74,21 +69,13 @@ def describe_pdb(pdb_id):
     pdb_id: string - 4 character
     Out: description from PDB
     '''
-    out = get_info(pdb_id, url_root='http://www.rcsb.org/pdb/rest/describePDB?structureId=')
-    out = to_dict(out)
-    out = remove_at_sign(out['PDBdescription']['PDB'])
-    for k, v in out.items():
-        print(k, '-', v)
-    return out
-
-
-def to_dict(odict):
-    '''
-    Converter to dictionary
-    convert to key: val pairs
-    '''
-    out = loads(dumps(odict))
-    return out
+    if (len(pdb_id) == 4):
+        out = get_info(pdb_id, url_root='http://www.rcsb.org/pdb/rest/describePDB?structureId=')
+        out = remove_at_sign(out['PDBdescription']['PDB'])
+        print(json.dumps(out, indent=4))
+        return out
+    else:
+        print('Invalid input')
 
 
 def remove_at_sign(temp):
@@ -101,8 +88,6 @@ def remove_at_sign(temp):
 
     return temp
 
-
-# describe_pdb('4lza')
 
 def get_raw_blast(pdb_id, output_form='HTML', chain_id='A'):
     '''
@@ -117,8 +102,27 @@ def get_raw_blast(pdb_id, output_form='HTML', chain_id='A'):
     result = f.read()
     result = result.decode('unicode_escape')
     assert result
-
+    print(result)
     return result
 
 
-print(get_raw_blast('2a1o', output_form='HTML', chain_id='A'))
+def describe_chemical(chem_id):
+    out = get_info(chem_id, url_root='http://www.rcsb.org/pdb/rest/describeHet?chemicalID=')
+    print(json.dumps(out, indent=4))
+    return out
+
+
+def get_ligands(pdb_id):
+    if (len(pdb_id) > 3):
+        out = get_info(pdb_id, url_root='http://www.rcsb.org/pdb/rest/ligandInfo?structureId=')
+        print(json.dumps(out, indent=4))
+        return out
+    else:
+        print('Invalid input')
+
+# get_ligands('1c2e')
+# describe_chemical('NAG')
+# describe_pdb('4zla')
+# get_pdb_file('4zpo', filetype='pdb', compression=False)
+# get_info("2j4W")
+# get_raw_blast('2ako', output_form='HTML', chain_id='A')
