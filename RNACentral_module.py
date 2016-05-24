@@ -1,5 +1,5 @@
 import hashlib
-import requests  # pip install requests
+import requests
 
 
 def get_md5(sequence):
