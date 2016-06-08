@@ -11,7 +11,7 @@ from json import loads, dumps
 import warnings
 
 
-def get_info(pdb_id, url_root='http://www.rcsb.org/pdb/rest/describeMol?structureId='):
+def informacja(pdb_id, url_root='http://www.rcsb.org/pdb/rest/describeMol?structureId='):
     '''
         Input:
         pdb_id : string
@@ -124,5 +124,5 @@ def get_ligands(pdb_id):
 # describe_chemical('NAG')
 # describe_pdb('4zla')
 # get_pdb_file('4zpo', filetype='pdb', compression=False)
-# get_info("2j4W")
+# informacja("2j4W")
 # get_raw_blast('2ako', output_form='HTML', chain_id='A')
