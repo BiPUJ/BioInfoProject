@@ -32,7 +32,7 @@ def rnacentral_id(md5):
         return 'iD not found'
 
 
-def information_RNACentral(id):
+def information_RNACentral(id, page=1,pageSize=10):
     """"
         This call provides a summary of properties of a RNACentral entry,
         such as the title of the entry, number of entities,
@@ -40,12 +40,14 @@ def information_RNACentral(id):
         experimental method, list of related entries in case split entries, etc.
 
         :param id:  String - 4-character RNACentral id code.
+        :param page: Number - specifies which page will be shown(1 is default)
+        :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
         :return:release_date, experimental_method_class, name, assembly_id,preferred,form,
         deposition_site,related_structures,title,split_entry,number_of_entities,processing_site,
         entry_authors,revision_date,deposition_date
     """
     path_url = 'http://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/'
-    url = path_url + format(id)
+    url = path_url + format(id) + '&page=' + format(page) + '&page_size=' + format(pageSize)
     try:
         request = urllib.request.Request(url)
         temp = urllib.request.urlopen(request)
@@ -66,7 +68,7 @@ def information_RNACentral(id):
         print('Invalid Input')
 
 
-def publications_RNACentral(id):
+def publications_RNACentral(id, page=1,pageSize=10):
     """
         This call provides details of publications associated with an entry,
         such as title of the article, journal name,
@@ -74,10 +76,12 @@ def publications_RNACentral(id):
         Primary citation is listed first.
 
         :param id: String - 4-character PDB id code.
+        :param page: Number - specifies which page will be shown(1 is default)
+        :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
         :return: next, previous, count, pubmed_id, publication, authors, pub_id, title, doi, pubmed_id
     """
     path_url = 'http://rnacentral.org/api/v1/rna/' + format(id) + '/publications'
-    url = path_url
+    url = path_url + '&page=' + format(page) + '&page_size=' + format(pageSize)
     try:
         request = urllib.request.Request(url)
         temp = urllib.request.urlopen(request)
@@ -98,21 +102,22 @@ def publications_RNACentral(id):
         print('Invalid Input')
 
 
-def xrefs_RNACentral(id):
+def xrefs_RNACentral(id, page=1,pageSize=10):
     """
     List of cross-references for a particular RNA sequence such as
     database, if is active,  first seen last seen etc
 
     :param id: String - 4-character PDB id code.
+    :param page: Number - specifies which page will be shown(1 is default)
+    :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :return: first_seen,last_seen,database,is_expert_db,taxid,is_active,
     accession: product, source_url, description, species, rna_type, id, expert_db_url,
     optional_id, url, citations, external_id, organelle, gene
     """
-    path_url = 'http://rnacentral.org/api/v1/rna/' + format(id) + '/xrefs'
-    print(path_url)
-    url = path_url
+    path_url = 'http://rnacentral.org/api/v1/rna/' + format(id) + '/xrefs' + '&page=' + format(
+        page) + '&page_size=' + format(pageSize)
     try:
-        request = urllib.request.Request(url)
+        request = urllib.request.Request(path_url)
         temp = urllib.request.urlopen(request)
         result = temp.read()
         result = result.decode('unicode_escape')
@@ -131,15 +136,17 @@ def xrefs_RNACentral(id):
         print('Invalid Input')
 
 
-def filter_length(len):
+def filter_length(len, page=1, pageSize=10):
     """
     This call returns list of structures which have length equal len param.
 
     :param len: Number - structure length
+    :param page: Number - specifies which page will be shown(1 is default)
+    :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?length='
-    url = path_url + format(len)
+    url = path_url + format(len) + '&page=' + format(page) + '&page_size=' + format(pageSize)
     try:
         request = urllib.request.Request(url)
         temp = urllib.request.urlopen(request)
@@ -163,15 +170,17 @@ def filter_length(len):
             print('Invalid Input')
 
 
-def filter_min_length(len):
+def filter_min_length(len, page=1, pageSize=10):
     """
     This call returns list of structures which have length equal or bigger than len param.
 
     :param len: Number - specifies the minimum length
+    :param page: Number - specifies which page will be shown(1 is default)
+    :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?min_length='
-    url = path_url + format(len)
+    url = path_url + format(len) + '&page=' + format(page) + '&page_size=' + format(pageSize)
     try:
         request = urllib.request.Request(url)
         temp = urllib.request.urlopen(request)
@@ -195,15 +204,17 @@ def filter_min_length(len):
             print('Invalid Input')
 
 
-def filter_max_length(len):
+def filter_max_length(len, page=1, pageSize=10):
     """
     This call returns list of structures which have length equal or smaller than len param.
 
     :param len: Number - specifies the maximum length
+    :param page: Number -specifies which page will be shown(1 is default)
+    :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?max_length='
-    url = path_url + format(len)
+    url = path_url + format(len) + '&page=' + format(page) + '&page_size=' + format(pageSize)
     try:
         request = urllib.request.Request(url)
         temp = urllib.request.urlopen(request)
@@ -227,15 +238,18 @@ def filter_max_length(len):
             print('Invalid Input')
 
 
-def filter_min_max_length(min, max):
+def filter_min_max_length(min, max, page=1, pageSize=10):
     """
     This call returns list of structures which have length between min and max params.
 
     :param min: Number - specifies the minimum length
     :param max: Number - specifies the maximum length
+    :param page: Number -specifies which page will be shown(1 is default)
+    :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
-    path_url = 'http://rnacentral.org/api/v1/rna/?min_length=' + format(min) + '&max_length=' + format(max)
+    path_url = 'http://rnacentral.org/api/v1/rna/?min_length=' + format(min) + '&max_length=' + format(
+        max) + '&page=' + format(page) + '&page_size=' + format(pageSize)
     try:
         request = urllib.request.Request(path_url)
         temp = urllib.request.urlopen(request)
@@ -259,15 +273,17 @@ def filter_min_max_length(min, max):
             print('Invalid Input')
 
 
-def filter_by_database(database):
+def filter_by_database(database, page=1, pageSize=10):
     """
     This call returns list of structures which are in database param.
 
     :param database: String - Name of database
+    :param page: Number - specifies which page will be shown(1 is default)
+    :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?database='
-    url = path_url + format(database)
+    url = path_url + format(database) + '&page=' + format(page) + '&page_size=' + format(pageSize)
     try:
         request = urllib.request.Request(url)
         temp = urllib.request.urlopen(request)
@@ -323,15 +339,18 @@ def filter_by_external_id(id):
             print('Invalid Input')
 
 
-def filter_database_min_length(database, min):
+def filter_database_min_length(database, min, page=1, pageSize=10):
     """
     This call returns list of structures which are in database param and have length bigger than min.
 
     :param database: String - Name of database
     :param min: Number - specifies the minimum length
+    :param page: Number - specifies which page will be shown(1 is default)
+    :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
-    path_url = 'http://rnacentral.org/api/v1/rna/?database=' + format(database) + '&min_length=' + format(min)
+    path_url = 'http://rnacentral.org/api/v1/rna/?database=' + format(database) + '&min_length=' + format(
+        min) + '&page=' + format(page) + '&page_size=' + format(pageSize)
     try:
         request = urllib.request.Request(path_url)
         temp = urllib.request.urlopen(request)
@@ -355,15 +374,18 @@ def filter_database_min_length(database, min):
             print('Invalid Input')
 
 
-def filter_database_max_length(database, max):
+def filter_database_max_length(database, max, page=1, pageSize=10):
     """
     This call returns list of structures which are in database param and have length smaller than max.
 
     :param database: String - Name of database
     :param max: Number - specifies the maximum length
+    :param page: Number - specifies which page will be shown(1 is default)
+    :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
-    path_url = 'http://rnacentral.org/api/v1/rna/?database=' + format(database) + '&max_length=' + format(max)
+    path_url = 'http://rnacentral.org/api/v1/rna/?database=' + format(database) + '&max_length=' + format(
+        max) + '&page=' + format(page) + '&page_size=' + format(pageSize)
     try:
         request = urllib.request.Request(path_url)
         temp = urllib.request.urlopen(request)
@@ -385,6 +407,7 @@ def filter_database_max_length(database, max):
             print('Not found')
         else:
             print('Invalid Input')
+
 
 # This sequence has an RNAcentral id
 # sequence = 'CUGAAUAAAUAAGGUAUCUUAUAUCUUUUAAUUAACAGUUAAACGCUUCCAUAAAGCUUUUAUCCA'
@@ -394,10 +417,10 @@ def filter_database_max_length(database, max):
 # print(publications_RNACentral('URS0000000001'))
 # print(xrefs_RNACentral('URS0000000001'))
 # print(filter_length(2014))
-# print(filter_min_length(2014))
+#print(filter_min_length(2014,3,5))
 # print(filter_max_length(2014))
 # print(filter_min_max_length(1000,2002))
 # print(filter_by_database('srpdb'))
 # print(filter_by_external_id('MIMAT0000091'))
 # print(filter_database_min_length('srpdb',200))
-# print(filter_database_max_length('srpdb',200))
+#print(filter_database_max_length('srpdb', 200, 1, 5))
