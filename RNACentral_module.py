@@ -134,6 +134,7 @@ def xrefs_RNACentral(id):
 def filter_length(len):
     """
     This call returns list of structures which have length equal len param.
+
     :param len: Number - structure length
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
@@ -165,6 +166,7 @@ def filter_length(len):
 def filter_min_length(len):
     """
     This call returns list of structures which have length equal or bigger than len param.
+
     :param len: Number - specifies the minimum length
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
@@ -196,6 +198,7 @@ def filter_min_length(len):
 def filter_max_length(len):
     """
     This call returns list of structures which have length equal or smaller than len param.
+
     :param len: Number - specifies the maximum length
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
@@ -227,6 +230,7 @@ def filter_max_length(len):
 def filter_min_max_length(min, max):
     """
     This call returns list of structures which have length between min and max params.
+
     :param min: Number - specifies the minimum length
     :param max: Number - specifies the maximum length
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
@@ -258,6 +262,7 @@ def filter_min_max_length(min, max):
 def filter_by_database(database):
     """
     This call returns list of structures which are in database param.
+
     :param database: String - Name of database
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
@@ -289,6 +294,7 @@ def filter_by_database(database):
 def filter_by_external_id(id):
     """
     This call provides details about structure from external_id.
+
     :param id: String - external id
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
@@ -320,6 +326,7 @@ def filter_by_external_id(id):
 def filter_database_min_length(database, min):
     """
     This call returns list of structures which are in database param and have length bigger than min.
+
     :param database: String - Name of database
     :param min: Number - specifies the minimum length
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
@@ -351,6 +358,7 @@ def filter_database_min_length(database, min):
 def filter_database_max_length(database, max):
     """
     This call returns list of structures which are in database param and have length smaller than max.
+
     :param database: String - Name of database
     :param max: Number - specifies the maximum length
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
@@ -381,7 +389,6 @@ def filter_database_max_length(database, max):
 # This sequence has an RNAcentral id
 # sequence = 'CUGAAUAAAUAAGGUAUCUUAUAUCUUUUAAUUAACAGUUAAACGCUUCCAUAAAGCUUUUAUCCA'
 # md5 = calculate_md5(sequence)
-
 # print(rnacentral_id(md5))
 # print(information_RNACentral('1cbs'))
 # print(publications_RNACentral('URS0000000001'))
