@@ -32,7 +32,7 @@ def rnacentral_id(md5):
         return 'iD not found'
 
 
-def information_RNACentral(id, page=1,pageSize=10):
+def information_RNACentral(id):
     """"
         This call provides a summary of properties of a RNACentral entry,
         such as the title of the entry, number of entities,
@@ -40,14 +40,10 @@ def information_RNACentral(id, page=1,pageSize=10):
         experimental method, list of related entries in case split entries, etc.
 
         :param id:  String - 4-character RNACentral id code.
-        :param page: Number - specifies which page will be shown(1 is default)
-        :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
-        :return:release_date, experimental_method_class, name, assembly_id,preferred,form,
-        deposition_site,related_structures,title,split_entry,number_of_entities,processing_site,
-        entry_authors,revision_date,deposition_date
+        :return:publications, xrefs, length, rnacentral_id, url, sequence, md5
     """
-    path_url = 'http://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/'
-    url = path_url + format(id) + '&page=' + format(page) + '&page_size=' + format(pageSize)
+    path_url = 'http://rnacentral.org/api/v1/rna/'
+    url = path_url + format(id)
     try:
         request = urllib.request.Request(url)
         temp = urllib.request.urlopen(request)
@@ -68,7 +64,7 @@ def information_RNACentral(id, page=1,pageSize=10):
         print('Invalid Input')
 
 
-def publications_RNACentral(id, page=1,pageSize=10):
+def publications_RNACentral(id):
     """
         This call provides details of publications associated with an entry,
         such as title of the article, journal name,
@@ -76,12 +72,10 @@ def publications_RNACentral(id, page=1,pageSize=10):
         Primary citation is listed first.
 
         :param id: String - 4-character PDB id code.
-        :param page: Number - specifies which page will be shown(1 is default)
-        :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
         :return: next, previous, count, pubmed_id, publication, authors, pub_id, title, doi, pubmed_id
     """
     path_url = 'http://rnacentral.org/api/v1/rna/' + format(id) + '/publications'
-    url = path_url + '&page=' + format(page) + '&page_size=' + format(pageSize)
+    url = path_url
     try:
         request = urllib.request.Request(url)
         temp = urllib.request.urlopen(request)
@@ -102,20 +96,17 @@ def publications_RNACentral(id, page=1,pageSize=10):
         print('Invalid Input')
 
 
-def xrefs_RNACentral(id, page=1,pageSize=10):
+def xrefs_RNACentral(id):
     """
     List of cross-references for a particular RNA sequence such as
     database, if is active,  first seen last seen etc
 
     :param id: String - 4-character PDB id code.
-    :param page: Number - specifies which page will be shown(1 is default)
-    :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :return: first_seen,last_seen,database,is_expert_db,taxid,is_active,
     accession: product, source_url, description, species, rna_type, id, expert_db_url,
     optional_id, url, citations, external_id, organelle, gene
     """
-    path_url = 'http://rnacentral.org/api/v1/rna/' + format(id) + '/xrefs' + '&page=' + format(
-        page) + '&page_size=' + format(pageSize)
+    path_url = 'http://rnacentral.org/api/v1/rna/' + format(id) + '/xrefs'
     try:
         request = urllib.request.Request(path_url)
         temp = urllib.request.urlopen(request)
@@ -408,19 +399,18 @@ def filter_database_max_length(database, max, page=1, pageSize=10):
         else:
             print('Invalid Input')
 
-
 # This sequence has an RNAcentral id
 # sequence = 'CUGAAUAAAUAAGGUAUCUUAUAUCUUUUAAUUAACAGUUAAACGCUUCCAUAAAGCUUUUAUCCA'
 # md5 = calculate_md5(sequence)
 # print(rnacentral_id(md5))
-# print(information_RNACentral('1cbs'))
+# print(information_RNACentral('URS0000000001'))
 # print(publications_RNACentral('URS0000000001'))
 # print(xrefs_RNACentral('URS0000000001'))
 # print(filter_length(2014))
-#print(filter_min_length(2014,3,5))
+# print(filter_min_length(2014,3,5))
 # print(filter_max_length(2014))
 # print(filter_min_max_length(1000,2002))
 # print(filter_by_database('srpdb'))
 # print(filter_by_external_id('MIMAT0000091'))
 # print(filter_database_min_length('srpdb',200))
-#print(filter_database_max_length('srpdb', 200, 1, 5))
+# print(filter_database_max_length('srpdb', 200, 1, 5))
