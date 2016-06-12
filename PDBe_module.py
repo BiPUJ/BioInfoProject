@@ -111,42 +111,6 @@ def get_publications(id):
         else:
             print('Invalid Input')
 
-
-def get_related_publication(id):  # request not working
-    """
-    This call provides details about publication obtained from EuroPMC.
-    These are articles which cite the primary citation of the entry,
-    or open-access articles which mention the entry id without explicitly citing the primary citation of an entry.
-
-    :param id: String - 4-character PDB id code.
-    :return: pubmed_id, publication, authors, pub_id, title, doi, pubmed_id, type, journal_info, pages, issue, year,
-    volume, pdb_abbreviation, ISO_abbreviation, abstract, author_list
-    """
-    path_url = 'http://www.ebi.ac.uk/pdbe/api/pdb/entry/related_publications/'
-    url = path_url + format(id)
-    try:
-        request = urllib.request.Request(url)
-        temp = urllib.request.urlopen(request)
-        result = temp.read()
-        result = result.decode('unicode_escape')
-        assert result
-        result = json.loads(result)
-        result = json.dumps(result, indent=4)
-        root = tk.Tk()
-        root.withdraw()
-        file_path = filedialog.asksaveasfilename()
-        if file_path:
-            file = open(file_path + '.txt', 'w')
-            file.write(result)
-            file.close
-        return result
-    except urllib.error.HTTPError as err:
-        if err.code == 404:
-            print('ID not found')
-        else:
-            print('Invalid Input')
-
-
 def get_experiment(id):
     """
     This call provides details of experiment(s) carried out in determining the structure of the entry.
