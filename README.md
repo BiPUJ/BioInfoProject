@@ -1,2 +1,2 @@
 # BioInfoProject
-Module for Pdb in python
+Module for PDBe and RNACentral in python
