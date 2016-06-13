@@ -32,7 +32,7 @@ def rnacentral_id(md5):
         return 'iD not found'
 
 
-def information_RNACentral(id):
+def information_RNACentral(id, save='false'):
     """"
         This call provides a summary of properties of a RNACentral entry,
         such as the title of the entry, number of entities,
@@ -40,6 +40,7 @@ def information_RNACentral(id):
         experimental method, list of related entries in case split entries, etc.
 
         :param id:  String - 4-character RNACentral id code.
+        :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
         :return:publications, xrefs, length, rnacentral_id, url, sequence, md5
     """
     path_url = 'http://rnacentral.org/api/v1/rna/'
@@ -52,19 +53,20 @@ def information_RNACentral(id):
         assert result
         result = json.loads(result)
         result = json.dumps(result, indent=4)
-        root = tk.Tk()
-        root.withdraw()
-        file_path = filedialog.asksaveasfilename()
-        if file_path:
-            file = open(file_path + '.txt', 'w')
-            file.write(result)
-            file.close
+        if (save == 'true'):
+            root = tk.Tk()
+            root.withdraw()
+            file_path = filedialog.asksaveasfilename()
+            if file_path:
+                file = open(file_path + '.txt', 'w')
+                file.write(result)
+                file.close
         return result
     except:
         print('Invalid Input')
 
 
-def publications_RNACentral(id):
+def publications_RNACentral(id, save='false'):
     """
         This call provides details of publications associated with an entry,
         such as title of the article, journal name,
@@ -72,6 +74,7 @@ def publications_RNACentral(id):
         Primary citation is listed first.
 
         :param id: String - 4-character PDB id code.
+        :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
         :return: next, previous, count, pubmed_id, publication, authors, pub_id, title, doi, pubmed_id
     """
     path_url = 'http://rnacentral.org/api/v1/rna/' + format(id) + '/publications'
@@ -84,24 +87,26 @@ def publications_RNACentral(id):
         assert result
         result = json.loads(result)
         result = json.dumps(result, indent=4)
-        root = tk.Tk()
-        root.withdraw()
-        file_path = filedialog.asksaveasfilename()
-        if file_path:
-            file = open(file_path + '.txt', 'w')
-            file.write(result)
-            file.close
+        if (save == 'true'):
+            root = tk.Tk()
+            root.withdraw()
+            file_path = filedialog.asksaveasfilename()
+            if file_path:
+                file = open(file_path + '.txt', 'w')
+                file.write(result)
+                file.close
         return result
     except:
         print('Invalid Input')
 
 
-def xrefs_RNACentral(id):
+def xrefs_RNACentral(id, save='false'):
     """
     List of cross-references for a particular RNA sequence such as
     database, if is active,  first seen last seen etc
 
     :param id: String - 4-character PDB id code.
+    :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
     :return: first_seen,last_seen,database,is_expert_db,taxid,is_active,
     accession: product, source_url, description, species, rna_type, id, expert_db_url,
     optional_id, url, citations, external_id, organelle, gene
@@ -115,25 +120,27 @@ def xrefs_RNACentral(id):
         assert result
         result = json.loads(result)
         result = json.dumps(result, indent=4)
-        root = tk.Tk()
-        root.withdraw()
-        file_path = filedialog.asksaveasfilename()
-        if file_path:
-            file = open(file_path + '.txt', 'w')
-            file.write(result)
-            file.close
+        if (save == 'true'):
+            root = tk.Tk()
+            root.withdraw()
+            file_path = filedialog.asksaveasfilename()
+            if file_path:
+                file = open(file_path + '.txt', 'w')
+                file.write(result)
+                file.close
         return result
     except:
         print('Invalid Input')
 
 
-def filter_length(len, page=1, pageSize=10):
+def filter_length(len, page=1, pageSize=10, save='false'):
     """
     This call returns list of structures which have length equal len param.
 
     :param len: Number - structure length
     :param page: Number - specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
+    :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?length='
@@ -146,13 +153,14 @@ def filter_length(len, page=1, pageSize=10):
         assert result
         result = json.loads(result)
         result = json.dumps(result, indent=4)
-        root = tk.Tk()
-        root.withdraw()
-        file_path = filedialog.asksaveasfilename()
-        if file_path:
-            file = open(file_path + '.txt', 'w')
-            file.write(result)
-            file.close
+        if (save == 'true'):
+            root = tk.Tk()
+            root.withdraw()
+            file_path = filedialog.asksaveasfilename()
+            if file_path:
+                file = open(file_path + '.txt', 'w')
+                file.write(result)
+                file.close
         return result
     except urllib.error.HTTPError as err:
         if err.code == 404:
@@ -161,13 +169,14 @@ def filter_length(len, page=1, pageSize=10):
             print('Invalid Input')
 
 
-def filter_min_length(len, page=1, pageSize=10):
+def filter_min_length(len, page=1, pageSize=10, save='false'):
     """
     This call returns list of structures which have length equal or bigger than len param.
 
     :param len: Number - specifies the minimum length
     :param page: Number - specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
+    :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?min_length='
@@ -180,13 +189,14 @@ def filter_min_length(len, page=1, pageSize=10):
         assert result
         result = json.loads(result)
         result = json.dumps(result, indent=4)
-        root = tk.Tk()
-        root.withdraw()
-        file_path = filedialog.asksaveasfilename()
-        if file_path:
-            file = open(file_path + '.txt', 'w')
-            file.write(result)
-            file.close
+        if (save == 'true'):
+            root = tk.Tk()
+            root.withdraw()
+            file_path = filedialog.asksaveasfilename()
+            if file_path:
+                file = open(file_path + '.txt', 'w')
+                file.write(result)
+                file.close
         return result
     except urllib.error.HTTPError as err:
         if err.code == 404:
@@ -195,13 +205,14 @@ def filter_min_length(len, page=1, pageSize=10):
             print('Invalid Input')
 
 
-def filter_max_length(len, page=1, pageSize=10):
+def filter_max_length(len, page=1, pageSize=10, save='false'):
     """
     This call returns list of structures which have length equal or smaller than len param.
 
     :param len: Number - specifies the maximum length
     :param page: Number -specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
+    :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?max_length='
@@ -214,13 +225,14 @@ def filter_max_length(len, page=1, pageSize=10):
         assert result
         result = json.loads(result)
         result = json.dumps(result, indent=4)
-        root = tk.Tk()
-        root.withdraw()
-        file_path = filedialog.asksaveasfilename()
-        if file_path:
-            file = open(file_path + '.txt', 'w')
-            file.write(result)
-            file.close
+        if (save == 'true'):
+            root = tk.Tk()
+            root.withdraw()
+            file_path = filedialog.asksaveasfilename()
+            if file_path:
+                file = open(file_path + '.txt', 'w')
+                file.write(result)
+                file.close
         return result
     except urllib.error.HTTPError as err:
         if err.code == 404:
@@ -229,7 +241,7 @@ def filter_max_length(len, page=1, pageSize=10):
             print('Invalid Input')
 
 
-def filter_min_max_length(min, max, page=1, pageSize=10):
+def filter_min_max_length(min, max, page=1, pageSize=10, save='false'):
     """
     This call returns list of structures which have length between min and max params.
 
@@ -237,6 +249,7 @@ def filter_min_max_length(min, max, page=1, pageSize=10):
     :param max: Number - specifies the maximum length
     :param page: Number -specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
+    :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?min_length=' + format(min) + '&max_length=' + format(
@@ -249,13 +262,14 @@ def filter_min_max_length(min, max, page=1, pageSize=10):
         assert result
         result = json.loads(result)
         result = json.dumps(result, indent=4)
-        root = tk.Tk()
-        root.withdraw()
-        file_path = filedialog.asksaveasfilename()
-        if file_path:
-            file = open(file_path + '.txt', 'w')
-            file.write(result)
-            file.close
+        if (save == 'true'):
+            root = tk.Tk()
+            root.withdraw()
+            file_path = filedialog.asksaveasfilename()
+            if file_path:
+                file = open(file_path + '.txt', 'w')
+                file.write(result)
+                file.close
         return result
     except urllib.error.HTTPError as err:
         if err.code == 404:
@@ -264,13 +278,14 @@ def filter_min_max_length(min, max, page=1, pageSize=10):
             print('Invalid Input')
 
 
-def filter_by_database(database, page=1, pageSize=10):
+def filter_by_database(database, page=1, pageSize=10, save='false'):
     """
     This call returns list of structures which are in database param.
 
     :param database: String - Name of database
     :param page: Number - specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
+    :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?database='
@@ -283,13 +298,14 @@ def filter_by_database(database, page=1, pageSize=10):
         assert result
         result = json.loads(result)
         result = json.dumps(result, indent=4)
-        root = tk.Tk()
-        root.withdraw()
-        file_path = filedialog.asksaveasfilename()
-        if file_path:
-            file = open(file_path + '.txt', 'w')
-            file.write(result)
-            file.close
+        if (save == 'true'):
+            root = tk.Tk()
+            root.withdraw()
+            file_path = filedialog.asksaveasfilename()
+            if file_path:
+                file = open(file_path + '.txt', 'w')
+                file.write(result)
+                file.close
         return result
     except urllib.error.HTTPError as err:
         if err.code == 404:
@@ -298,11 +314,12 @@ def filter_by_database(database, page=1, pageSize=10):
             print('Invalid Input')
 
 
-def filter_by_external_id(id):
+def filter_by_external_id(id, save='false'):
     """
     This call provides details about structure from external_id.
 
     :param id: String - external id
+    :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?external_id='
@@ -315,13 +332,14 @@ def filter_by_external_id(id):
         assert result
         result = json.loads(result)
         result = json.dumps(result, indent=4)
-        root = tk.Tk()
-        root.withdraw()
-        file_path = filedialog.asksaveasfilename()
-        if file_path:
-            file = open(file_path + '.txt', 'w')
-            file.write(result)
-            file.close
+        if (save == 'true'):
+            root = tk.Tk()
+            root.withdraw()
+            file_path = filedialog.asksaveasfilename()
+            if file_path:
+                file = open(file_path + '.txt', 'w')
+                file.write(result)
+                file.close
         return result
     except urllib.error.HTTPError as err:
         if err.code == 404:
@@ -330,7 +348,7 @@ def filter_by_external_id(id):
             print('Invalid Input')
 
 
-def filter_database_min_length(database, min, page=1, pageSize=10):
+def filter_database_min_length(database, min, page=1, pageSize=10, save='false'):
     """
     This call returns list of structures which are in database param and have length bigger than min.
 
@@ -338,6 +356,7 @@ def filter_database_min_length(database, min, page=1, pageSize=10):
     :param min: Number - specifies the minimum length
     :param page: Number - specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
+    :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?database=' + format(database) + '&min_length=' + format(
@@ -350,13 +369,14 @@ def filter_database_min_length(database, min, page=1, pageSize=10):
         assert result
         result = json.loads(result)
         result = json.dumps(result, indent=4)
-        root = tk.Tk()
-        root.withdraw()
-        file_path = filedialog.asksaveasfilename()
-        if file_path:
-            file = open(file_path + '.txt', 'w')
-            file.write(result)
-            file.close
+        if (save == 'true'):
+            root = tk.Tk()
+            root.withdraw()
+            file_path = filedialog.asksaveasfilename()
+            if file_path:
+                file = open(file_path + '.txt', 'w')
+                file.write(result)
+                file.close
         return result
     except urllib.error.HTTPError as err:
         if err.code == 404:
@@ -365,7 +385,7 @@ def filter_database_min_length(database, min, page=1, pageSize=10):
             print('Invalid Input')
 
 
-def filter_database_max_length(database, max, page=1, pageSize=10):
+def filter_database_max_length(database, max, page=1, pageSize=10, save='false'):
     """
     This call returns list of structures which are in database param and have length smaller than max.
 
@@ -373,6 +393,7 @@ def filter_database_max_length(database, max, page=1, pageSize=10):
     :param max: Number - specifies the maximum length
     :param page: Number - specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
+    :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?database=' + format(database) + '&max_length=' + format(
@@ -385,32 +406,17 @@ def filter_database_max_length(database, max, page=1, pageSize=10):
         assert result
         result = json.loads(result)
         result = json.dumps(result, indent=4)
-        root = tk.Tk()
-        root.withdraw()
-        file_path = filedialog.asksaveasfilename()
-        if file_path:
-            file = open(file_path + '.txt', 'w')
-            file.write(result)
-            file.close
+        if (save == 'true'):
+            root = tk.Tk()
+            root.withdraw()
+            file_path = filedialog.asksaveasfilename()
+            if file_path:
+                file = open(file_path + '.txt', 'w')
+                file.write(result)
+                file.close
         return result
     except urllib.error.HTTPError as err:
         if err.code == 404:
             print('Not found')
         else:
             print('Invalid Input')
-
-# This sequence has an RNAcentral id
-# sequence = 'CUGAAUAAAUAAGGUAUCUUAUAUCUUUUAAUUAACAGUUAAACGCUUCCAUAAAGCUUUUAUCCA'
-# md5 = calculate_md5(sequence)
-# print(rnacentral_id(md5))
-# print(information_RNACentral('URS0000000001'))
-# print(publications_RNACentral('URS0000000001'))
-# print(xrefs_RNACentral('URS0000000001'))
-# print(filter_length(2014))
-# print(filter_min_length(2014,3,5))
-# print(filter_max_length(2014))
-# print(filter_min_max_length(1000,2002))
-# print(filter_by_database('srpdb'))
-# print(filter_by_external_id('MIMAT0000091'))
-# print(filter_database_min_length('srpdb',200))
-# print(filter_database_max_length('srpdb', 200, 1, 5))
