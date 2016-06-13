@@ -1,5 +1,5 @@
 import unittest
-from PDBe_module import *
+from Modules.PDBe_module import *
 
 
 class PDBeTest(unittest.TestCase):
