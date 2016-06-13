@@ -32,7 +32,7 @@ def rnacentral_id(md5):
         return 'iD not found'
 
 
-def information_RNACentral(id, save='false'):
+def information_RNACentral(id, save='false', isShowed='false'):
     """"
         This call provides a summary of properties of a RNACentral entry,
         such as the title of the entry, number of entities,
@@ -41,6 +41,7 @@ def information_RNACentral(id, save='false'):
 
         :param id:  String - 4-character RNACentral id code.
         :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
+        :param isShowed: Boolean - 'true' if you want to show output in console, 'false'(default) not showing output
         :return:publications, xrefs, length, rnacentral_id, url, sequence, md5
     """
     path_url = 'http://rnacentral.org/api/v1/rna/'
@@ -52,21 +53,23 @@ def information_RNACentral(id, save='false'):
         result = result.decode('unicode_escape')
         assert result
         result = json.loads(result)
-        result = json.dumps(result, indent=4)
+        toShow = json.dumps(result, indent=2)
+        if (isShowed == 'true'):
+            print(toShow)
         if (save == 'true'):
             root = tk.Tk()
             root.withdraw()
             file_path = filedialog.asksaveasfilename()
             if file_path:
                 file = open(file_path + '.txt', 'w')
-                file.write(result)
+                file.write(toShow)
                 file.close
         return result
     except:
         print('Invalid Input')
 
 
-def publications_RNACentral(id, save='false'):
+def publications_RNACentral(id, save='false', isShowed='false'):
     """
         This call provides details of publications associated with an entry,
         such as title of the article, journal name,
@@ -75,6 +78,7 @@ def publications_RNACentral(id, save='false'):
 
         :param id: String - 4-character PDB id code.
         :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
+        :param isShowed: Boolean - 'true' if you want to show output in console, 'false'(default) not showing output
         :return: next, previous, count, pubmed_id, publication, authors, pub_id, title, doi, pubmed_id
     """
     path_url = 'http://rnacentral.org/api/v1/rna/' + format(id) + '/publications'
@@ -86,27 +90,30 @@ def publications_RNACentral(id, save='false'):
         result = result.decode('unicode_escape')
         assert result
         result = json.loads(result)
-        result = json.dumps(result, indent=4)
+        toShow = json.dumps(result, indent=2)
+        if (isShowed == 'true'):
+            print(toShow)
         if (save == 'true'):
             root = tk.Tk()
             root.withdraw()
             file_path = filedialog.asksaveasfilename()
             if file_path:
                 file = open(file_path + '.txt', 'w')
-                file.write(result)
+                file.write(toShow)
                 file.close
         return result
     except:
         print('Invalid Input')
 
 
-def xrefs_RNACentral(id, save='false'):
+def xrefs_RNACentral(id, save='false', isShowed='false'):
     """
     List of cross-references for a particular RNA sequence such as
     database, if is active,  first seen last seen etc
 
     :param id: String - 4-character PDB id code.
     :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
+    :param isShowed: Boolean - 'true' if you want to show output in console, 'false'(default) not showing output
     :return: first_seen,last_seen,database,is_expert_db,taxid,is_active,
     accession: product, source_url, description, species, rna_type, id, expert_db_url,
     optional_id, url, citations, external_id, organelle, gene
@@ -119,21 +126,23 @@ def xrefs_RNACentral(id, save='false'):
         result = result.decode('unicode_escape')
         assert result
         result = json.loads(result)
-        result = json.dumps(result, indent=4)
+        toShow = json.dumps(result, indent=2)
+        if (isShowed == 'true'):
+            print(toShow)
         if (save == 'true'):
             root = tk.Tk()
             root.withdraw()
             file_path = filedialog.asksaveasfilename()
             if file_path:
                 file = open(file_path + '.txt', 'w')
-                file.write(result)
+                file.write(toShow)
                 file.close
         return result
     except:
         print('Invalid Input')
 
 
-def filter_length(len, page=1, pageSize=10, save='false'):
+def filter_length(len, page=1, pageSize=10, save='false', isShowed='false'):
     """
     This call returns list of structures which have length equal len param.
 
@@ -141,6 +150,7 @@ def filter_length(len, page=1, pageSize=10, save='false'):
     :param page: Number - specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
+    :param isShowed: Boolean - 'true' if you want to show output in console, 'false'(default) not showing output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?length='
@@ -152,14 +162,16 @@ def filter_length(len, page=1, pageSize=10, save='false'):
         result = result.decode('unicode_escape')
         assert result
         result = json.loads(result)
-        result = json.dumps(result, indent=4)
+        toShow = json.dumps(result, indent=2)
+        if (isShowed == 'true'):
+            print(toShow)
         if (save == 'true'):
             root = tk.Tk()
             root.withdraw()
             file_path = filedialog.asksaveasfilename()
             if file_path:
                 file = open(file_path + '.txt', 'w')
-                file.write(result)
+                file.write(toShow)
                 file.close
         return result
     except urllib.error.HTTPError as err:
@@ -169,7 +181,7 @@ def filter_length(len, page=1, pageSize=10, save='false'):
             print('Invalid Input')
 
 
-def filter_min_length(len, page=1, pageSize=10, save='false'):
+def filter_min_length(len, page=1, pageSize=10, save='false', isShowed='false'):
     """
     This call returns list of structures which have length equal or bigger than len param.
 
@@ -177,6 +189,7 @@ def filter_min_length(len, page=1, pageSize=10, save='false'):
     :param page: Number - specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
+    :param isShowed: Boolean - 'true' if you want to show output in console, 'false'(default) not showing output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?min_length='
@@ -188,14 +201,16 @@ def filter_min_length(len, page=1, pageSize=10, save='false'):
         result = result.decode('unicode_escape')
         assert result
         result = json.loads(result)
-        result = json.dumps(result, indent=4)
+        toShow = json.dumps(result, indent=2)
+        if (isShowed == 'true'):
+            print(toShow)
         if (save == 'true'):
             root = tk.Tk()
             root.withdraw()
             file_path = filedialog.asksaveasfilename()
             if file_path:
                 file = open(file_path + '.txt', 'w')
-                file.write(result)
+                file.write(toShow)
                 file.close
         return result
     except urllib.error.HTTPError as err:
@@ -205,7 +220,7 @@ def filter_min_length(len, page=1, pageSize=10, save='false'):
             print('Invalid Input')
 
 
-def filter_max_length(len, page=1, pageSize=10, save='false'):
+def filter_max_length(len, page=1, pageSize=10, save='false', isShowed='false'):
     """
     This call returns list of structures which have length equal or smaller than len param.
 
@@ -213,6 +228,7 @@ def filter_max_length(len, page=1, pageSize=10, save='false'):
     :param page: Number -specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
+    :param isShowed: Boolean - 'true' if you want to show output in console, 'false'(default) not showing output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?max_length='
@@ -224,14 +240,16 @@ def filter_max_length(len, page=1, pageSize=10, save='false'):
         result = result.decode('unicode_escape')
         assert result
         result = json.loads(result)
-        result = json.dumps(result, indent=4)
+        toShow = json.dumps(result, indent=2)
+        if (isShowed == 'true'):
+            print(toShow)
         if (save == 'true'):
             root = tk.Tk()
             root.withdraw()
             file_path = filedialog.asksaveasfilename()
             if file_path:
                 file = open(file_path + '.txt', 'w')
-                file.write(result)
+                file.write(toShow)
                 file.close
         return result
     except urllib.error.HTTPError as err:
@@ -241,7 +259,7 @@ def filter_max_length(len, page=1, pageSize=10, save='false'):
             print('Invalid Input')
 
 
-def filter_min_max_length(min, max, page=1, pageSize=10, save='false'):
+def filter_min_max_length(min, max, page=1, pageSize=10, save='false', isShowed='false'):
     """
     This call returns list of structures which have length between min and max params.
 
@@ -250,6 +268,7 @@ def filter_min_max_length(min, max, page=1, pageSize=10, save='false'):
     :param page: Number -specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
+    :param isShowed: Boolean - 'true' if you want to show output in console, 'false'(default) not showing output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?min_length=' + format(min) + '&max_length=' + format(
@@ -261,14 +280,16 @@ def filter_min_max_length(min, max, page=1, pageSize=10, save='false'):
         result = result.decode('unicode_escape')
         assert result
         result = json.loads(result)
-        result = json.dumps(result, indent=4)
+        toShow = json.dumps(result, indent=2)
+        if (isShowed == 'true'):
+            print(toShow)
         if (save == 'true'):
             root = tk.Tk()
             root.withdraw()
             file_path = filedialog.asksaveasfilename()
             if file_path:
                 file = open(file_path + '.txt', 'w')
-                file.write(result)
+                file.write(toShow)
                 file.close
         return result
     except urllib.error.HTTPError as err:
@@ -278,7 +299,7 @@ def filter_min_max_length(min, max, page=1, pageSize=10, save='false'):
             print('Invalid Input')
 
 
-def filter_by_database(database, page=1, pageSize=10, save='false'):
+def filter_by_database(database, page=1, pageSize=10, save='false', isShowed='false'):
     """
     This call returns list of structures which are in database param.
 
@@ -286,6 +307,7 @@ def filter_by_database(database, page=1, pageSize=10, save='false'):
     :param page: Number - specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
+    :param isShowed: Boolean - 'true' if you want to show output in console, 'false'(default) not showing output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?database='
@@ -297,14 +319,16 @@ def filter_by_database(database, page=1, pageSize=10, save='false'):
         result = result.decode('unicode_escape')
         assert result
         result = json.loads(result)
-        result = json.dumps(result, indent=4)
+        toShow = json.dumps(result, indent=2)
+        if (isShowed == 'true'):
+            print(toShow)
         if (save == 'true'):
             root = tk.Tk()
             root.withdraw()
             file_path = filedialog.asksaveasfilename()
             if file_path:
                 file = open(file_path + '.txt', 'w')
-                file.write(result)
+                file.write(toShow)
                 file.close
         return result
     except urllib.error.HTTPError as err:
@@ -314,12 +338,13 @@ def filter_by_database(database, page=1, pageSize=10, save='false'):
             print('Invalid Input')
 
 
-def filter_by_external_id(id, save='false'):
+def filter_by_external_id(id, save='false', isShowed='false'):
     """
     This call provides details about structure from external_id.
 
     :param id: String - external id
     :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
+    :param isShowed: Boolean - 'true' if you want to show output in console, 'false'(default) not showing output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?external_id='
@@ -331,14 +356,16 @@ def filter_by_external_id(id, save='false'):
         result = result.decode('unicode_escape')
         assert result
         result = json.loads(result)
-        result = json.dumps(result, indent=4)
+        toShow = json.dumps(result, indent=2)
+        if (isShowed == 'true'):
+            print(toShow)
         if (save == 'true'):
             root = tk.Tk()
             root.withdraw()
             file_path = filedialog.asksaveasfilename()
             if file_path:
                 file = open(file_path + '.txt', 'w')
-                file.write(result)
+                file.write(toShow)
                 file.close
         return result
     except urllib.error.HTTPError as err:
@@ -348,7 +375,7 @@ def filter_by_external_id(id, save='false'):
             print('Invalid Input')
 
 
-def filter_database_min_length(database, min, page=1, pageSize=10, save='false'):
+def filter_database_min_length(database, min, page=1, pageSize=10, save='false', isShowed='false'):
     """
     This call returns list of structures which are in database param and have length bigger than min.
 
@@ -357,6 +384,7 @@ def filter_database_min_length(database, min, page=1, pageSize=10, save='false')
     :param page: Number - specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
+    :param isShowed: Boolean - 'true' if you want to show output in console, 'false'(default) not showing output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?database=' + format(database) + '&min_length=' + format(
@@ -368,14 +396,16 @@ def filter_database_min_length(database, min, page=1, pageSize=10, save='false')
         result = result.decode('unicode_escape')
         assert result
         result = json.loads(result)
-        result = json.dumps(result, indent=4)
+        toShow = json.dumps(result, indent=2)
+        if (isShowed == 'true'):
+            print(toShow)
         if (save == 'true'):
             root = tk.Tk()
             root.withdraw()
             file_path = filedialog.asksaveasfilename()
             if file_path:
                 file = open(file_path + '.txt', 'w')
-                file.write(result)
+                file.write(toShow)
                 file.close
         return result
     except urllib.error.HTTPError as err:
@@ -385,7 +415,7 @@ def filter_database_min_length(database, min, page=1, pageSize=10, save='false')
             print('Invalid Input')
 
 
-def filter_database_max_length(database, max, page=1, pageSize=10, save='false'):
+def filter_database_max_length(database, max, page=1, pageSize=10, save='false', isShowed='false'):
     """
     This call returns list of structures which are in database param and have length smaller than max.
 
@@ -394,6 +424,7 @@ def filter_database_max_length(database, max, page=1, pageSize=10, save='false')
     :param page: Number - specifies which page will be shown(1 is default)
     :param pageSize: Number - specifies how many scores will be shown in one page(10 is default, 100 is maximum)
     :param save:  Boolean - 'true' if you want to save output to file, 'false'(default) not saving output
+    :param isShowed: Boolean - 'true' if you want to show output in console, 'false'(default) not showing output
     :return: count, publications, md5, rnacentral_id, length, xrefs, sequence, url, next, previous
     """
     path_url = 'http://rnacentral.org/api/v1/rna/?database=' + format(database) + '&max_length=' + format(
@@ -405,14 +436,16 @@ def filter_database_max_length(database, max, page=1, pageSize=10, save='false')
         result = result.decode('unicode_escape')
         assert result
         result = json.loads(result)
-        result = json.dumps(result, indent=4)
+        toShow = json.dumps(result, indent=2)
+        if (isShowed == 'true'):
+            print(toShow)
         if (save == 'true'):
             root = tk.Tk()
             root.withdraw()
             file_path = filedialog.asksaveasfilename()
             if file_path:
                 file = open(file_path + '.txt', 'w')
-                file.write(result)
+                file.write(toShow)
                 file.close
         return result
     except urllib.error.HTTPError as err:
