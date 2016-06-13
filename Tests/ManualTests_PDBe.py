@@ -1,0 +1,20 @@
+from Modules.PDBe_module import *
+
+
+# print(get_summary_info('2asc'))
+# print(get_molecules('1cbs'))
+# print(get_publications('1cbs'))
+# print(get_experiment('1cbs'))
+# print(get_NMR_resource('2k8v'))
+# print(get_ligands('1cbs'))
+# print(get_modified_residues('4v5j'))
+# print(get_mutated_residues('4v5j'))
+# print(get_release_status('1cbs'))
+# print(get_observed_ranges('1cbs'))
+# print(get_observed_ranges_in_PDB_chain('1cbs','A'))
+# print(get_secondary_structure('1cbs'))
+# print(get_list_of_residues_with_modelling_information('1cbs'))
+# print(get_list_of_residues_with_modelling_information_for_a_particular_PDB_chain('1cbs','A'))
+# print(get_binding_sites('1cbs'))
+# print(get_URLs_of_various_files_associated_with_a_PDB_entry('1cbs'))
+# print(get_ratio_of_observed_residues('2k8v'))
