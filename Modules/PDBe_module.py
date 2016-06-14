@@ -35,7 +35,7 @@ def get_summary_info(id, save='false', isShowed='false'):
             file_path = filedialog.asksaveasfilename()
             if file_path:
                 file = open(file_path + '.txt', 'w')
-                file.write(isShowed)
+                file.write(toShow)
                 file.close
         return result
     except urllib.error.HTTPError as err:
