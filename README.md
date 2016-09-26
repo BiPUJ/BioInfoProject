@@ -1,2 +1,1 @@
-# BioInfoProject
-Module for PDBe and RNACentral in python
+Adapter for easy access to RNA Central resources directly from python

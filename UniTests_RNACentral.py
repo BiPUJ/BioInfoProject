@@ -1,5 +1,5 @@
 import unittest
-from Modules.RNACentral_module import *
+from RNACentral_test import *
 
 
 class PDBeTest(unittest.TestCase):
